@@ -1,6 +1,18 @@
 import { Music } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export const SongSection = () => {
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    // Auto-play audio when component mounts
+    if (audioRef.current) {
+      audioRef.current.play().catch(() => {
+        // Browsers may block auto-play, fail silently
+      });
+    }
+  }, []);
+
   return (
     <section className="py-12 px-4">
       <h2 className="font-display text-3xl md:text-4xl text-center text-foreground mb-4">
@@ -23,19 +35,18 @@ export const SongSection = () => {
             <h3 className="font-display text-xl text-center text-foreground mb-4">
               Kyon – Barfi
             </h3>
+
+            {/* Audio Player */}
+            <audio
+              ref={audioRef}
+              controls
+              loop
+              className="w-full mb-6 rounded-lg"
+            >
+              <source src="/audio/audio.mp3" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
             
-            <div className="aspect-video rounded-2xl overflow-hidden shadow-soft">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/QVQF35kkQ-c"
-                title="Kyon - Barfi"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
-            </div>
           </div>
           
           <div className="mt-6 flex justify-center gap-2">

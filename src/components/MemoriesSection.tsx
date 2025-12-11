@@ -3,22 +3,22 @@ import { useEffect, useState } from "react";
 const memories = [
   {
     id: 1,
-    placeholder: "Memory 1",
+    image: "/images/memory1.jpeg", // Add your image path here
     gradient: "from-rose-light to-lavender-light",
   },
   {
     id: 2,
-    placeholder: "Memory 2",
+    image: "/images/memory2.jpeg", // Add your image path here
     gradient: "from-lavender-light to-rose-light",
   },
   {
     id: 3,
-    placeholder: "Memory 3",
+    image: "/images/memory3.jpeg", // Add your image path here
     gradient: "from-rose-light to-gold-light",
   },
   {
     id: 4,
-    placeholder: "Memory 4",
+    image: "/images/memory4.jpeg", // Add your image path here
     gradient: "from-gold-light to-lavender-light",
   },
 ];
@@ -28,7 +28,7 @@ export const MemoriesSection = () => {
 
   useEffect(() => {
     const timers: NodeJS.Timeout[] = [];
-    
+
     memories.forEach((_, index) => {
       const timer = setTimeout(() => {
         setVisiblePhotos((prev) => [...prev, index]);
@@ -44,7 +44,7 @@ export const MemoriesSection = () => {
       <h2 className="font-display text-3xl md:text-4xl text-center text-foreground mb-8">
         Our Beautiful Memories ✨
       </h2>
-      
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
         {memories.map((memory, index) => (
           <div
@@ -56,22 +56,32 @@ export const MemoriesSection = () => {
             }`}
             style={{ transitionDelay: `${index * 100}ms` }}
           >
-            <div className={`absolute inset-0 bg-gradient-to-br ${memory.gradient} flex items-center justify-center`}>
-              <div className="text-center p-4">
-                <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-card/50 flex items-center justify-center">
-                  <span className="text-2xl">📷</span>
+            {memory.image ? (
+              <img
+                src={memory.image}
+                alt={`Memory ${memory.id}`}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${memory.gradient} flex items-center justify-center`}
+              >
+                <div className="text-center p-4">
+                  <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-card/50 flex items-center justify-center">
+                    <span className="text-2xl">📷</span>
+                  </div>
+                  <p className="font-body text-sm text-muted-foreground">
+                    Add your photo here
+                  </p>
                 </div>
-                <p className="font-body text-sm text-muted-foreground">
-                  Add your photo here
-                </p>
               </div>
-            </div>
-            
+            )}
+
             <div className="absolute inset-0 border-2 border-rose/20 rounded-2xl pointer-events-none" />
           </div>
         ))}
       </div>
-      
+
       <p className="text-center text-muted-foreground mt-6 font-body text-sm">
         Replace these placeholders with your favorite photos of Fiza 💕
       </p>
