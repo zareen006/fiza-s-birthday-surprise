@@ -1,5 +1,6 @@
 import { Music } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { getAssetPath } from "@/lib/assetPath";
 
 export const SongSection = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -43,7 +44,7 @@ export const SongSection = () => {
               loop
               className="w-full mb-6 rounded-lg"
             >
-              <source src="/audio/audio.mp3" type="audio/mpeg" />
+              <source src={getAssetPath("audio/audio.mp3")} type="audio/mpeg" />
               Your browser does not support the audio element.
             </audio>
             

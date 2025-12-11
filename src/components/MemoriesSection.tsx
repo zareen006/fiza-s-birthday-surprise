@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
+import { getAssetPath } from "@/lib/assetPath";
 
 const memories = [
   {
     id: 1,
-    image: "/images/memory1.jpeg", // Add your image path here
+    image: getAssetPath("images/memory1.jpeg"),
     gradient: "from-rose-light to-lavender-light",
   },
   {
     id: 2,
-    image: "/images/memory2.jpeg", // Add your image path here
+    image: getAssetPath("images/memory2.jpeg"),
     gradient: "from-lavender-light to-rose-light",
   },
   {
     id: 3,
-    image: "/images/memory3.jpeg", // Add your image path here
+    image: getAssetPath("images/memory3.jpeg"),
     gradient: "from-rose-light to-gold-light",
   },
   {
     id: 4,
-    image: "/images/memory4.jpeg", // Add your image path here
+    image: getAssetPath("images/memory4.jpeg"),
     gradient: "from-gold-light to-lavender-light",
   },
 ];
@@ -27,7 +28,7 @@ export const MemoriesSection = () => {
   const [visiblePhotos, setVisiblePhotos] = useState<number[]>([]);
 
   useEffect(() => {
-    const timers: NodeJS.Timeout[] = [];
+    const timers: ReturnType<typeof setTimeout>[] = [];
 
     memories.forEach((_, index) => {
       const timer = setTimeout(() => {
@@ -36,7 +37,7 @@ export const MemoriesSection = () => {
       timers.push(timer);
     });
 
-    return () => timers.forEach((timer) => clearTimeout(timer));
+    return () => timers.forEach((t) => clearTimeout(t));
   }, []);
 
   return (
@@ -61,10 +62,12 @@ export const MemoriesSection = () => {
                 src={memory.image}
                 alt={`Memory ${memory.id}`}
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             ) : (
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${memory.gradient} flex items-center justify-center`}
+                aria-hidden
               >
                 <div className="text-center p-4">
                   <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-card/50 flex items-center justify-center">
